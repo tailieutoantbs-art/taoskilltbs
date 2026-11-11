@@ -1469,6 +1469,15 @@
         margin-left: 0 !important;
       }
     }
+
+    @keyframes aiHighlightFlash {
+      0% { box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.55); border-color: #7c3aed; }
+      50% { box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3); border-color: #7c3aed; }
+      100% { box-shadow: none; border-color: var(--border-color); }
+    }
+    .ai-highlight-flash {
+      animation: aiHighlightFlash 1.6s ease-out !important;
+    }
   </style>
 </head>
 <body>
@@ -2226,7 +2235,7 @@ Kiểm tra các bước chứng minh hình học này giúp em`
         obj: `Nhớ và vận dụng đúng các hệ thức lượng trong tam giác vuông (b² = a.b', h² = b'.c', a.h = b.c, 1/h² = 1/b² + 1/c²)
 Tính độ dài các cạnh và đường cao trong tam giác vuông khi biết đủ dữ kiện
 Vận dụng tỉ số lượng giác để giải bài toán đo đạc chiều cao, khoảng cách thực tế
-Biết biến đổi linh hoạt giữa các tỉ số lượng giác của hai góc phụ nhau`,
+Biến đổi linh hoạt giữa các tỉ số lượng giác của hai góc phụ nhau`,
         ped: [0, 1, 2],
         noans: true,
         tone: 'Thân thiện, khích lệ',
@@ -2260,7 +2269,7 @@ Kiểm tra bài giải tính chiều cao giác kế này của em`
         prereq: 'Hằng đẳng thức đáng nhớ, tính chất cơ bản của bất đẳng thức',
         bloom: [2, 3, 4, 5],
         obj: `Phát biểu và vận dụng chuẩn xác bất đẳng thức Cauchy cho hai và ba số không âm
-Nắm vững kỹ thuật chọn điểm rơi để tách hạng tử và ghép cặp bất đẳng thức
+Vận dụng thành thạo kỹ thuật chọn điểm rơi để tách hạng tử và ghép cặp bất đẳng thức
 Tìm được giá trị lớn nhất (GTLN) và giá trị nhỏ nhất (GTNN) của biểu thức đại số
 Biện luận điều kiện xảy ra dấu đẳng thức để đảm bảo tính chặt chẽ của lời giải`,
         ped: [0, 1, 2, 5],
@@ -2332,7 +2341,7 @@ Kiểm tra bảng biến thiên hàm bậc hai này của em`
         prereq: 'Căn thức bậc hai, giải phương trình bậc hai, hệ thức Vi-ét',
         bloom: [2, 3, 4],
         obj: `Đặt điều kiện xác định (ĐKXĐ) chuẩn xác trước khi biến đổi phương trình
-Nắm vững phép biến đổi tương đương: √A = B ⇔ {B ≥ 0; A = B²} để tránh nghiệm ngoại lai
+Thực hiện chính xác phép biến đổi tương đương: √A = B ⇔ {B ≥ 0; A = B²} để tránh nghiệm ngoại lai
 Vận dụng phương pháp đặt ẩn phụ để đưa phương trình vô tỉ về phương trình đại số đơn giản
 Kiểm tra và đối chiếu nghiệm với điều kiện để đưa ra tập nghiệm chính xác`,
         ped: [0, 1, 5],
@@ -4073,11 +4082,82 @@ ${misconceptions.map(m => `- ${m}`).join('\n')}
           case 'unit': return this.getUnit(domain, st);
           case 'obj': return this.getObjectives(domain, st, subj, sc);
           case 'ped': return this.getPedagogy(domain, st);
+          case 'bloom': return this.getBloom(domain, st);
           case 'mis': return this.getMisconceptions(domain, st, sc);
+          case 'diff': return this.getDifferentiation(domain, st);
           case 'rub': return this.getRubrics(domain, st);
           case 'trig': return this.getTriggers(domain, st, sc);
+          case 'testcases': return this.getTestCasesSuggestion(domain, st);
           default: return null;
         }
+      },
+
+      getBloom(domain, st) {
+        const isAdvanced = /10|11|12|THPT|Đại học/i.test(st.level || '');
+        const options = [
+          {
+            label: isAdvanced ? 'Khung Bloom Bậc cao (Vận dụng → Đánh giá)' : 'Khung Bloom Cân bằng (Hiểu → Phân tích)',
+            value: isAdvanced ? [1, 2, 3, 4] : [1, 2, 3],
+            rationale: isAdvanced 
+              ? 'Dành cho THPT: Cần rèn luyện tư duy Phân tích (4) và Đánh giá (5) để giải các bài toán cực trị, ứng dụng và phân loại.'
+              : 'Dành cho THCS/Tiểu học: Đảm bảo nền tảng vững vàng từ Hiểu bản chất (2) đến Vận dụng thành thạo (3).'
+          },
+          {
+            label: 'Khung Toàn diện Năng lực (Nhớ → Sáng tạo)',
+            value: [0, 1, 2, 3, 4, 5],
+            rationale: 'Bao quát trọn vẹn cả 6 bậc nhận thức của GDPT 2018, từ nhắc lại định lý đến đề xuất hướng giải mới.'
+          }
+        ];
+        return {
+          title: 'Thang nhận thức Bloom tối ưu',
+          target: 'bloom',
+          domainLabel: this.getDomainLabel(domain),
+          options
+        };
+      },
+
+      getDifferentiation(domain, st) {
+        const options = [
+          {
+            label: 'Chiến lược 3 Nhóm Cốt lõi (Mất gốc + Khá giỏi + Thiếu tự tin)',
+            value: [0, 1, 2],
+            rationale: 'Chiến lược toàn diện: Chia nhỏ bước cho học sinh yếu, mở rộng thử thách cho học sinh khá giỏi, và khích lệ tâm lý cho học sinh lo âu.'
+          },
+          {
+            label: 'Chiến lược Tinh gọn (Mất gốc + Ngôn ngữ đơn giản)',
+            value: [0, 3],
+            rationale: 'Phù hợp khi học sinh mới tiếp cận chuyên đề khó hoặc học sinh bị hổng kiến thức nền tảng.'
+          }
+        ];
+        return {
+          title: 'Chiến lược phân hóa người học',
+          target: 'diff',
+          domainLabel: this.getDomainLabel(domain),
+          options
+        };
+      },
+
+      getTestCasesSuggestion(domain, st) {
+        const subj = st.subject || 'Toán học';
+        const sc = st.scope || st.name || 'chuyên đề này';
+        const options = [
+          {
+            label: `Bộ 4 Kịch bản Thử thách Nghiệp vụ cho ${subj}`,
+            value: [
+              [`Bắt đầu giải bài ${sc}`, `Em đang làm bài tập về ${sc} nhưng không biết biến đổi bước đầu tiên như thế nào ạ.`, 'Hỏi dữ kiện đề bài cho biết gì, gợi ý công thức mức 1, không đưa lời giải trọn gói.'],
+              ['Học sinh đòi đáp án ngay', 'Cho em kết quả luôn đi thầy/cô ơi, mai em phải nộp bài rồi.', 'Động viên tinh thần, hạ thấp độ khó thành câu hỏi gợi ý siêu nhỏ, kiên quyết không cho đáp số.'],
+              ['Bẫy ngộ nhận kinh điển', `Em giải bài này ra kết quả nhưng thấy khác với bạn, thầy/cô xem giúp em bước biến đổi này nhé.`, 'Khen dòng làm đúng trước, chỉ ra dòng nghi vấn và hỏi học sinh nguyên nhân ngộ nhận.'],
+              ['Hỏi câu hỏi ngoài lề', 'Thầy/cô có chơi game không, kể cho em nghe chuyện vui đi?', 'Từ chối lịch sự và khéo léo dẫn dắt học sinh quay lại bài học chính.']
+            ],
+            rationale: 'Kiểm tra 4 năng lực sư phạm cốt lõi: Khởi động Socratic, Ứng phó vòi đáp án, Bắt ngộ nhận và Giữ tập trung.'
+          }
+        ];
+        return {
+          title: 'Bộ Kịch bản Kiểm thử Năng lực Gia sư',
+          target: 'testcases',
+          domainLabel: this.getDomainLabel(domain),
+          options
+        };
       },
 
       autoFillAll(st) {
@@ -4205,8 +4285,9 @@ Yêu cầu trả về đúng định dạng JSON:
         });
         if (!res.ok) throw new Error('Lỗi gọi Gemini Cloud AI: ' + res.status);
         const data = await res.json();
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        return JSON.parse(text);
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        const cleaned = text.replace(/^\`\`\`(json)?\s*/i, '').replace(/\s*\`\`\`$/i, '').trim();
+        return JSON.parse(cleaned);
       },
 
       getScope(domain, st, subj) {
@@ -5133,7 +5214,13 @@ Giải thích lại giúp em chỗ này với ạ`,
             ` : ''}
           `;
         },
-        isValid: () => Boolean(state.name.trim() && state.subject.trim() && (state.mode === 'tutor' || state.unit.trim()))
+        isValid: () => Boolean(state.name.trim() && state.subject.trim() && (state.mode === 'tutor' || state.unit.trim())),
+        getValidationHint: () => {
+          if (!state.name.trim()) return 'Vui lòng nhập Tên kỹ năng gia sư';
+          if (!state.subject.trim()) return 'Vui lòng nhập Môn học / Lĩnh vực';
+          if (state.mode !== 'tutor' && !state.unit.trim()) return 'Vui lòng nhập Đơn vị bài học cụ thể';
+          return '';
+        }
       },
       {
         id: 'objectives',
@@ -5143,7 +5230,10 @@ Giải thích lại giúp em chỗ này với ạ`,
         render: () => {
           return `
             <div class="form-group">
-              <label class="form-label">Chọn các mức thang tư duy nhận thức:</label>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="form-label" style="margin-bottom: 0;">Chọn các mức thang tư duy nhận thức:</label>
+                <button type="button" class="btn-ai" data-action="aiSuggest" data-target="bloom">✨ AI Đề xuất Bloom</button>
+              </div>
               <div class="chips-group staircase">
                 ${BLOOM_TAXONOMY.map(([name, desc], idx) => {
                   const isSelected = state.bloom.includes(idx);
@@ -5170,7 +5260,11 @@ Giải thích lại giúp em chỗ này với ạ`,
             </div>
           `;
         },
-        isValid: () => parseLines(state.obj).length >= 1
+        isValid: () => parseLines(state.obj).length >= 1,
+        getValidationHint: () => {
+          if (parseLines(state.obj).length < 1) return 'Vui lòng nhập ít nhất 1 mục tiêu học tập cụ thể';
+          return '';
+        }
       },
       {
         id: 'pedagogy',
@@ -5222,7 +5316,11 @@ Giải thích lại giúp em chỗ này với ạ`,
             </div>
           `;
         },
-        isValid: () => state.ped.length >= 1
+        isValid: () => state.ped.length >= 1,
+        getValidationHint: () => {
+          if (state.ped.length < 1) return 'Vui lòng chọn ít nhất 1 phương pháp giảng dạy chủ đạo';
+          return '';
+        }
       },
       {
         id: 'misconceptions',
@@ -5244,7 +5342,10 @@ Giải thích lại giúp em chỗ này với ạ`,
             </div>
 
             <div class="form-group">
-              <label class="form-label">Chiến lược hỗ trợ phân hóa đối tượng:</label>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="form-label" style="margin-bottom: 0;">Chiến lược hỗ trợ phân hóa đối tượng:</label>
+                <button type="button" class="btn-ai" data-action="aiSuggest" data-target="diff">✨ AI Đề xuất Phân hóa</button>
+              </div>
               <div class="chips-group">
                 ${DIFFERENTIATION_STRATEGIES.map(([title, desc], idx) => {
                   const isSelected = state.diff.includes(idx);
@@ -5323,7 +5424,11 @@ Giải thích lại giúp em chỗ này với ạ`,
             </div>
           `;
         },
-        isValid: () => parseLines(state.trig).length >= 1
+        isValid: () => parseLines(state.trig).length >= 1,
+        getValidationHint: () => {
+          if (parseLines(state.trig).length < 1) return 'Vui lòng nhập ít nhất 1 câu lệnh kích hoạt (Trigger)';
+          return '';
+        }
       },
       {
         id: 'testing',
@@ -5353,9 +5458,14 @@ Giải thích lại giúp em chỗ này với ạ`,
               `).join('')}
             </div>
             <div class="button-row">
-              <button type="button" class="btn btn-secondary" id="btnCopyAllTests">
-                📋 Sao chép toàn bộ bộ câu hỏi thử
-              </button>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-secondary" id="btnCopyAllTests">
+                  📋 Sao chép toàn bộ bộ câu hỏi thử
+                </button>
+                <button type="button" class="btn-ai" data-action="aiSuggest" data-target="testcases">
+                  ✨ AI Gợi ý Kịch bản Kiểm thử Chuyên sâu
+                </button>
+              </div>
             </div>
           `;
         },
@@ -5532,34 +5642,62 @@ Giải thích lại giúp em chỗ này với ạ`,
       // Update wizard bottom buttons
       $('#btnBack').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
       $('#btnNext').style.display = currentStep === STEP_CONFIG.length - 1 ? 'none' : 'inline-flex';
-      $('#btnNext').disabled = !current.isValid();
+      
+      const isValid = current.isValid();
+      $('#btnNext').disabled = !isValid;
 
-      $('#quickStatus').textContent = currentStep === STEP_CONFIG.length - 1 
-        ? 'Đã hoàn thành tất cả các bước' 
-        : `Bước ${currentStep + 1} trên ${STEP_CONFIG.length}`;
+      const statusEl = $('#quickStatus');
+      if (currentStep === STEP_CONFIG.length - 1) {
+        statusEl.innerHTML = `<span style="color: var(--success); font-weight: 600;">✓ Bước 8/8: Sẵn sàng xuất bản Skill</span>`;
+      } else if (isValid) {
+        statusEl.innerHTML = `<span style="color: var(--success); font-weight: 500;">✓ Bước ${currentStep + 1}/${STEP_CONFIG.length}: Hợp lệ • Bấm Tiếp tục →</span>`;
+      } else {
+        const hint = current.getValidationHint ? current.getValidationHint() : 'Vui lòng hoàn thành các trường bắt buộc';
+        statusEl.innerHTML = `<span style="color: #d97706; font-weight: 600;">⚠️ ${hint}</span>`;
+      }
 
       renderStepsNavigation();
       saveState();
     };
 
-    /**
-     * Global Event Delegations
-     */
-    document.addEventListener('input', e => {
+    const updateWizardStatus = () => {
+      const current = STEP_CONFIG[currentStep];
+      const isValid = current.isValid();
+      $('#btnNext').disabled = !isValid;
+
+      const statusEl = $('#quickStatus');
+      if (currentStep === STEP_CONFIG.length - 1) {
+        statusEl.innerHTML = `<span style="color: var(--success); font-weight: 600;">✓ Bước 8/8: Sẵn sàng xuất bản Skill</span>`;
+      } else if (isValid) {
+        statusEl.innerHTML = `<span style="color: var(--success); font-weight: 500;">✓ Bước ${currentStep + 1}/${STEP_CONFIG.length}: Hợp lệ • Bấm Tiếp tục →</span>`;
+      } else {
+        const hint = current.getValidationHint ? current.getValidationHint() : 'Vui lòng hoàn thành các trường bắt buộc';
+        statusEl.innerHTML = `<span style="color: #d97706; font-weight: 600;">⚠️ ${hint}</span>`;
+      }
+    };
+
+    const handleBindUpdate = e => {
       const bindKey = e.target.dataset.bind;
       const bindCheck = e.target.dataset.bindCheck;
 
       if (bindKey) {
         state[bindKey] = e.target.value;
         saveState();
-        $('#btnNext').disabled = !STEP_CONFIG[currentStep].isValid();
+        updateWizardStatus();
       }
 
       if (bindCheck) {
         state[bindCheck] = e.target.checked;
         saveState();
+        updateWizardStatus();
       }
-    });
+    };
+
+    /**
+     * Global Event Delegations
+     */
+    document.addEventListener('input', handleBindUpdate);
+    document.addEventListener('change', handleBindUpdate);
 
     document.addEventListener('click', e => {
       // Step Nav click
@@ -6117,15 +6255,20 @@ Giải thích lại giúp em chỗ này với ạ`,
         $('#aiModalTitle').textContent = `AI Sư phạm: Gợi ý cho ${res.title}`;
         
         let html = `
-          <div style="margin-bottom: 16px; background: var(--bg-surface-alt); padding: 12px 14px; border-radius: var(--radius-md); border-left: 3px solid #7c3aed;">
-            <div style="font-size: 0.88rem; color: var(--text-main);">
-              <strong>Chủ đề nhận diện:</strong> ${escapeHtml(res.domainLabel)}
+          <div style="margin-bottom: 12px; background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(26, 86, 219, 0.08) 100%); border: 1px solid rgba(124, 58, 237, 0.25); padding: 12px 14px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <div>
+              <div style="font-size: 0.88rem; color: var(--text-main);">
+                <strong>⚡ Động cơ EduCore v3.5:</strong> ${escapeHtml(res.domainLabel)}
+              </div>
+              <small style="color: var(--text-muted); display: block; margin-top: 2px;">
+                Phương án chuẩn mực sư phạm GDPT 2018 (suy luận tức thì)
+              </small>
             </div>
-            <small style="color: var(--text-muted); display: block; margin-top: 2px;">
-              Dưới đây là các phương án sư phạm chuẩn mực được AI suy luận tối ưu cho nội dung này:
-            </small>
+            <button type="button" class="btn btn-secondary btn-sm" id="btnCallGeminiInModal" data-target="${target}" style="color: #7c3aed; border-color: #7c3aed; font-weight: 600;">
+              ✨ Gọi Gemini AI sinh mới
+            </button>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; flex-direction: column; gap: 14px;" id="aiSuggestionsList">
         `;
 
         res.options.forEach((opt, idx) => {
@@ -6152,6 +6295,52 @@ Giải thích lại giúp em chỗ này với ạ`,
                   </button>
                 </div>
                 <div class="ai-rationale">💡 <strong>Lý do sư phạm:</strong> ${escapeHtml(opt.rationale)}</div>
+              </div>
+            `;
+          } else if (target === 'bloom') {
+            html += `
+              <div class="ai-suggestion-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <strong style="color: #7c3aed; font-size: 0.95rem;">${escapeHtml(opt.label)}</strong>
+                  <button type="button" class="btn-ai" data-action="applyAiBloom" data-val='${JSON.stringify(opt.value)}'>
+                    Áp dụng thang Bloom này
+                  </button>
+                </div>
+                <div class="ai-rationale">💡 <strong>Lý do sư phạm:</strong> ${escapeHtml(opt.rationale)}</div>
+              </div>
+            `;
+          } else if (target === 'diff') {
+            html += `
+              <div class="ai-suggestion-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <strong style="color: #7c3aed; font-size: 0.95rem;">${escapeHtml(opt.label)}</strong>
+                  <button type="button" class="btn-ai" data-action="applyAiDiff" data-val='${JSON.stringify(opt.value)}'>
+                    Áp dụng nhóm phân hóa này
+                  </button>
+                </div>
+                <div class="ai-rationale">💡 <strong>Lý do sư phạm:</strong> ${escapeHtml(opt.rationale)}</div>
+              </div>
+            `;
+          } else if (target === 'testcases') {
+            html += `
+              <div class="ai-suggestion-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <strong style="color: #7c3aed; font-size: 0.95rem;">${escapeHtml(opt.label)}</strong>
+                  <span class="badge badge-quality" style="background: var(--success-subtle); color: var(--success); padding: 3px 8px; border-radius: 4px; font-size: 0.75rem;">Chuẩn Sư phạm</span>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">${escapeHtml(opt.rationale)}</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  ${opt.value.map((tc, tcIdx) => `
+                    <div style="background: var(--bg-surface-alt); padding: 8px 10px; border-radius: 4px; font-size: 0.84rem;">
+                      <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <strong>${tcIdx + 1}. ${escapeHtml(tc[0])}</strong>
+                        <button type="button" class="btn-chip" data-action="copyPrompt" data-text="${escapeHtml(tc[1])}">Sao chép</button>
+                      </div>
+                      <div style="color: var(--primary); margin: 3px 0;">"${escapeHtml(tc[1])}"</div>
+                      <small style="color: var(--text-muted);">Kỳ vọng: ${escapeHtml(tc[2])}</small>
+                    </div>
+                  `).join('')}
+                </div>
               </div>
             `;
           } else {
@@ -6207,6 +6396,82 @@ Giải thích lại giúp em chỗ này với ạ`,
         return;
       }
 
+      // Apply Bloom from AI
+      const applyBloomBtn = e.target.closest('[data-action="applyAiBloom"]');
+      if (applyBloomBtn) {
+        try {
+          state.bloom = JSON.parse(applyBloomBtn.dataset.val);
+          saveState();
+          $('#aiModal').classList.remove('open');
+          renderCurrentStep();
+          showToast('✨ Đã áp dụng các mức thang Bloom đề xuất!');
+        } catch (err) {}
+        return;
+      }
+
+      // Apply Diff from AI
+      const applyDiffBtn = e.target.closest('[data-action="applyAiDiff"]');
+      if (applyDiffBtn) {
+        try {
+          state.diff = JSON.parse(applyDiffBtn.dataset.val);
+          saveState();
+          $('#aiModal').classList.remove('open');
+          renderCurrentStep();
+          showToast('✨ Đã áp dụng chiến lược phân hóa đối tượng!');
+        } catch (err) {}
+        return;
+      }
+
+      // Call Gemini in Modal
+      const callGeminiBtn = e.target.closest('#btnCallGeminiInModal');
+      if (callGeminiBtn) {
+        const target = callGeminiBtn.dataset.target;
+        let key = runnerConfig.apiKey;
+        if (!key) {
+          key = prompt('Nhập Google Gemini API Key để sinh gợi ý sáng tạo (Miễn phí tại aistudio.google.com):', '');
+          if (!key || !key.trim()) return;
+          runnerConfig.apiKey = key.trim();
+          localStorage.setItem('edu_skill_studio_runner_key', runnerConfig.apiKey);
+        }
+
+        callGeminiBtn.disabled = true;
+        callGeminiBtn.textContent = '⏳ Đang gọi Gemini...';
+
+        PedagogicalAIEngine.fetchCloudSuggestion(target, state, key.trim())
+          .then(cloudRes => {
+            callGeminiBtn.disabled = false;
+            callGeminiBtn.textContent = '✨ Gọi Gemini AI sinh mới';
+            if (cloudRes && Array.isArray(cloudRes.options)) {
+              const list = $('#aiSuggestionsList');
+              const newCards = cloudRes.options.map(opt => `
+                <div class="ai-suggestion-card" style="border: 2px solid #7c3aed; background: var(--bg-surface);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+                    <strong style="color: #7c3aed; font-size: 0.95rem;">🌟 [Gemini AI] ${escapeHtml(opt.label)}</strong>
+                    <div style="display: flex; gap: 6px;">
+                      <button type="button" class="btn-chip" data-action="applyAiText" data-target="${target}" data-mode="append" data-val="${escapeHtml(opt.value)}">
+                        + Chèn thêm
+                      </button>
+                      <button type="button" class="btn-ai" data-action="applyAiText" data-target="${target}" data-mode="replace" data-val="${escapeHtml(opt.value)}">
+                        Thay thế ô này
+                      </button>
+                    </div>
+                  </div>
+                  <div style="font-size: 0.88rem; background: var(--bg-surface-alt); padding: 10px 12px; border-radius: var(--radius-sm); white-space: pre-wrap;">${escapeHtml(opt.value)}</div>
+                  ${opt.rationale ? `<div class="ai-rationale">💡 <strong>Lý do sư phạm:</strong> ${escapeHtml(opt.rationale)}</div>` : ''}
+                </div>
+              `).join('');
+              list.insertAdjacentHTML('afterbegin', newCards);
+              showToast('✨ Gemini AI đã sinh thêm phương án mới thành công!');
+            }
+          })
+          .catch(err => {
+            callGeminiBtn.disabled = false;
+            callGeminiBtn.textContent = '✨ Gọi Gemini AI sinh mới';
+            alert('Lỗi gọi Gemini AI: ' + err.message + '\nVui lòng kiểm tra lại khóa API Key.');
+          });
+        return;
+      }
+
       // Apply Text from AI (replace or append)
       const applyTextBtn = e.target.closest('[data-action="applyAiText"]');
       if (applyTextBtn) {
@@ -6223,6 +6488,16 @@ Giải thích lại giúp em chỗ này với ạ`,
         $('#aiModal').classList.remove('open');
         renderCurrentStep();
         showToast(`✨ Đã cập nhật gợi ý AI vào mục!`);
+
+        // Visual flash highlight
+        setTimeout(() => {
+          const el = document.querySelector(`[data-bind="${target}"]`);
+          if (el) {
+            el.classList.add('ai-highlight-flash');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => el.classList.remove('ai-highlight-flash'), 1800);
+          }
+        }, 50);
         return;
       }
 
@@ -6347,6 +6622,46 @@ Giải thích lại giúp em chỗ này với ạ`,
     const savedTheme = localStorage.getItem('edu_skill_studio_theme') || 
       (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', savedTheme);
+
+    // Check URL parameters for loadSkill
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const loadId = urlParams.get('loadSkill');
+      if (loadId) {
+        const repoStr = localStorage.getItem('edu_skills_repository');
+        if (repoStr) {
+          const repo = JSON.parse(repoStr);
+          const found = repo.find(item => item.id === loadId);
+          if (found) {
+            Object.assign(state, {
+              mode: found.mode || 'tutor',
+              name: found.name || found.title,
+              subject: found.subject || 'Toán',
+              level: found.level || 'THCS (lớp 6-9)',
+              scope: found.scope || '',
+              ctx: found.ctx || '',
+              unit: found.unit || '',
+              prereq: found.prereq || '',
+              bloom: found.bloom || [1, 2, 3],
+              obj: found.obj || '',
+              ped: found.ped || [0, 1, 6],
+              noans: found.noans !== undefined ? found.noans : true,
+              tone: found.tone || 'Thân thiện, khích lệ',
+              mis: found.mis || '',
+              diff: found.diff || [0, 1],
+              fb: found.fb || 'Nêu một điểm làm tốt và một bước cải thiện',
+              quiz: found.quiz || '3',
+              rub: found.rub || '',
+              trig: found.trig || ''
+            });
+            saveState();
+            setTimeout(() => showToast(`✨ Đã nạp kỹ năng: ${found.title} vào Xưởng thiết kế!`), 200);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('URL param parse error:', e);
+    }
 
     // Initial render
     renderCurrentStep();

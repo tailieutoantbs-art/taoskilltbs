@@ -18,16 +18,29 @@ AI Skill không phải là một câu prompt đơn lẻ. Nó là một **bộ qu
 
 ---
 
-## 🤖 1.3. TÍNH NĂNG ĐỘC QUYỀN: AI TỰ SINH GỢI Ý (AI AUTO-SUGGESTION)
+## 🤖 1.3. TÍNH NĂNG ĐỘC QUYỀN: AI TRỢ LÝ SƯ PHẠM TOÀN DIỆN & TÍCH HỢP GEMINI CLOUD
 
-Hệ thống được tích hợp sẵn **Engine Trí tuệ Sư phạm Cục bộ (Pedagogical AI Engine)** hoạt động ngay trên trình duyệt mà không cần cài đặt API key:
+Hệ thống được trang bị **Engine Trí tuệ Sư phạm EduCore v3.5** kết hợp với **Google Gemini Cloud AI**:
 1. **🪄 Tự động thiết lập tất cả (Smart Auto-Fill All)**: 
    - Tại Bước 1, bạn chỉ cần gõ tên môn (Toán, Vật lí, Hóa học, Tiếng Anh...) hoặc tên một chuyên đề.
-   - Bấm nút **"✨ Tự động thiết lập tất cả"**, AI sẽ tự động phân tích và sinh ra trọn bộ thiết lập chuẩn sư phạm cho cả 8 bước (Mục tiêu, Phương pháp, Ngộ nhận, Rubric 100%, Câu kích hoạt, Test cases).
-2. **✨ AI Gợi ý cho từng mục cụ thể**:
-   - Ở mỗi ô nhập liệu, bạn đều thấy nút **`✨ AI Gợi ý`**.
-   - Bấm vào nút này, AI sẽ đưa ra 2-3 phương án sư phạm kèm **giải thích lý do chuyên môn (Pedagogical Rationale)**.
-   - Bạn có thể chọn **`Thay thế ô này`** hoặc **`+ Chèn thêm`** vào cuối nội dung đã có chỉ bằng 1 cú nhấp chuột!
+   - Bấm nút **"✨ Tự động thiết lập tất cả"**, AI sẽ tự động phân tích và sinh ra trọn bộ thiết lập chuẩn sư phạm cho cả 8 bước (Mục tiêu chuẩn Bloom, Phương pháp, Ngộ nhận 3 vế, Rubric tròn 100%, Câu kích hoạt, Kịch bản test cases).
+2. **✨ AI Trợ lý Sư phạm phủ kín toàn bộ 8 bước**:
+   - **Bước 1**: Gợi ý Bài học & Kiến thức tiên quyết chuẩn mạch chương trình.
+   - **Bước 2**: `✨ AI Đề xuất Bloom` (Chọn phối hợp các bậc nhận thức phù hợp cấp học) và `✨ AI Gợi ý` Mục tiêu học tập đo lường được.
+   - **Bước 3**: `✨ AI Gợi ý` Phương pháp sư phạm phối hợp và Giọng điệu tối ưu.
+   - **Bước 4**: `✨ AI Gợi ý` Bảng ngộ nhận chuẩn 3 vế và `✨ AI Đề xuất Phân hóa` (chọn nhóm đối tượng người học).
+   - **Bước 5**: `✨ AI Gợi ý` Kiểu phản hồi sư phạm và Rubric đánh giá tròn 100%.
+   - **Bước 6**: `✨ AI Gợi ý` Câu lệnh kích hoạt thực tế từ học sinh.
+   - **Bước 7**: `✨ AI Gợi ý Kịch bản Kiểm thử Chuyên sâu` (tạo bộ 4 tình huống sát hạch gia sư).
+   - **Bước 8**: `🪄 Tự sửa toàn bộ` đưa 100% tiêu chí đạt chuẩn Socratic tối đa (11/11 Tiêu chí).
+3. **✨ Tích hợp Google Gemini Cloud AI ngay trong Modal gợi ý**:
+   - Trong cửa sổ AI Sư phạm, ngoài các phương án chuẩn mực suy luận tức thì từ Engine cục bộ, bạn có thể bấm **`✨ Gọi Gemini AI sinh mới`**.
+   - Gemini AI sẽ sinh thêm các phương án sư phạm sáng tạo, mới lạ và phong phú không giới hạn theo đúng ngữ cảnh môn học bạn đang thiết kế.
+4. **💡 Hiệu ứng Trực quan Flash Highlight**:
+   - Khi áp dụng bất kỳ gợi ý nào từ AI (Thay thế hoặc Chèn thêm), hệ thống sẽ tự động cuộn màn hình đến ô nhập liệu tương ứng và nháy sáng viền tím nổi bật (`ai-highlight-flash`) giúp bạn nhận biết ngay nội dung đã được cập nhật ở đâu.
+5. **🧭 Thanh Cảnh báo Đồng bộ Thời gian thực (#quickStatus)**:
+   - Ở chân trang bên cạnh nút *Tiếp tục*, thanh trạng thái luôn hiển thị chính xác tiến độ và lý do cụ thể nếu nút Tiếp tục chưa sáng (ví dụ: *"⚠️ Vui lòng nhập tên bài học"* hoặc *"⚠️ Vui lòng điền tên kỹ năng"*).
+   - Khi đạt chuẩn, thanh chuyển màu xanh: *"✓ Bước X/8: Hợp lệ • Bấm Tiếp tục →"*, mang lại trải nghiệm mượt mà, thông suốt.
 
 ---
 
@@ -102,9 +115,11 @@ Tiến trình học tập không phải là hỏi đáp ngẫu nhiên mà đư�
 
 ### Bước 2: Mục tiêu học tập & Thang Bloom (Objectives)
 * **Thang nhận thức Bloom**: Chọn các bậc tư duy bạn muốn rèn luyện cho học sinh (từ *Nhớ, Hiểu, Vận dụng* đến *Phân tích, Đánh giá, Sáng tạo*). **Lưu ý**: Nên chọn ít nhất 1 mức từ Phân tích trở lên để AI rèn tư duy phản biện.
+  - Bấm nút **`✨ AI Đề xuất Bloom`** để AI tự động chọn bộ thang Bloom tối ưu theo môn học và cấp lớp.
 * **Quy tắc viết mục tiêu**:
   - Dùng **động từ hành động đo lường được**: *Giải được, vẽ được sơ đồ, phân biệt được, tìm ra lỗi sai...*
   - **Tránh** các từ chung chung: *Hiểu được, nắm được, biết được*.
+  - Bấm nút **`✨ AI Gợi ý`** để nhận các mục tiêu học tập mẫu chuẩn hóa đo lường được.
 
 ### Bước 3: Phương pháp Sư phạm & Giọng điệu (Pedagogy)
 * Chọn từ **2 đến 4 phương pháp** nghiên cứu sư phạm đã được lập trình sẵn:
@@ -114,25 +129,29 @@ Tiến trình học tập không phải là hỏi đáp ngẫu nhiên mà đư�
   - *Retrieval Practice (Roediger)*: Hỏi nhanh nhớ lại kiến thức đầu/cuối buổi học.
 * **Nguyên tắc "Không đưa đáp án trực tiếp"**: Bật tính năng này để AI kiên quyết từ chối giải hộ, ép học sinh phải tư duy.
 * **Giọng điệu**: Chọn giọng điệu phù hợp (*Thân thiện, khích lệ*, *Vui nhộn*, *Học thuật*...).
+* Bấm nút **`✨ AI Gợi ý Chiến lược`** để AI đề xuất gói phương pháp và giọng điệu chuẩn theo bộ môn.
 
 ### Bước 4: Lỗi sai & Chiến lược Phân hóa (Misconceptions)
 * **Quy tắc 3 vế (bắt buộc có 2 mũi tên `→`)**:
   `[Tên lỗi sai điển hình] → [Nguyên nhân ngộ nhận bản chất] → [Câu hỏi/Ví dụ phản bác giúp tự sửa]`
   *Ví dụ:* `Quên đổi dấu khi chuyển vế → xem chuyển vế như đổi chỗ tự do → cho học sinh cộng hai vế cùng một số để tự kiểm chứng.`
-* Bấm nút **"+ Thêm mẫu mũi tên"** để chèn nhanh cấu trúc chuẩn.
-* Chọn các nhóm đối tượng phân hóa (Học sinh mất gốc, học sinh khá giỏi, học sinh lo âu...).
+* Bấm nút **"+ Thêm mẫu mũi tên"** để chèn nhanh cấu trúc chuẩn hoặc bấm **`✨ AI Gợi ý Ngộ nhận`** để lấy các bảng lỗi kinh điển kèm giải pháp phản bác.
+* Chọn các nhóm đối tượng phân hóa (Học sinh mất gốc, học sinh khá giỏi, học sinh lo âu...). Bấm **`✨ AI Đề xuất Phân hóa`** để thiết lập nhóm học sinh cần trợ giúp theo môn.
 
 ### Bước 5: Đánh giá & Phản hồi (Assessment)
 * **Kiểu phản hồi**: Khuyên dùng *Nêu một điểm làm tốt và một bước cải thiện*.
 * **Phiếu thoát lớp (Exit Ticket)**: Chọn số câu hỏi kiểm tra nhanh cuối buổi (2-3 câu).
 * **Tiêu chí chấm (Rubric)**: Liệt kê các tiêu chí kèm tỷ lệ phần trăm (Tổng tỷ lệ % phải bằng đúng **100%**).
+* Bấm **`✨ AI Gợi ý`** để nhận Rubric chuẩn hóa đã cân đối sẵn 100%.
 
 ### Bước 6: Câu lệnh kích hoạt (Triggers)
 * Liệt kê các câu học sinh thường nói trong thực tế (ít nhất 3 câu, mỗi câu dài trên 10 ký tự).
 * Ví dụ: *"Thầy/cô kiểm tra bài giải này giúp em với"*, *"Em chưa hiểu chỗ này"*...
+* Bấm **`✨ AI Gợi ý Câu kích hoạt`** để sinh danh sách câu hỏi kích hoạt tự nhiên từ học sinh.
 
 ### Bước 7: Kiểm thử Năng lực (Test Cases)
 * Hệ thống tự động tạo 4 tình huống kiểm thử (Học sinh đòi đáp án, học sinh gửi bài giải có lỗi sai, học sinh hỏi lạc đề, học sinh chưa có nền tảng).
+* Bấm nút **`✨ AI Gợi ý Kịch bản Kiểm thử Chuyên sâu`** để xem phân tích kỳ vọng sư phạm và các bài toán thử nghiệm chuyên sâu.
 * Bấm **"Sao chép câu hỏi"** để dán vào AI và đối chiếu xem AI có phản ứng đúng như mong đợi không.
 
 ### Bước 8: Hoàn tất & Xuất bản (Export)
