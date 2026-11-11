@@ -204,3 +204,30 @@ Tiến trình học tập không phải là hỏi đáp ngẫu nhiên mà đư�
 * **Nạp lại dự án (`Import JSON`)**: Bấm nút **"📂 Nạp dự án"** và chọn file `.json` đã lưu trước đó để tiếp tục chỉnh sửa.
 * **Xem trước thời gian thực**: Bấm nút **"👁️ Xem trước"** bất kỳ lúc nào để xem ngay file `SKILL.md` và kiểm tra điểm chuẩn hóa sư phạm hiện tại.
 * **Chế độ Sáng / Tối**: Bấm nút **"🌓"** để đổi màu giao diện phù hợp với mắt khi làm việc buổi tối.
+
+---
+
+## ☁️ 5. TRUNG TÂM QUẢN TRỊ KHO SKILL & ĐỒNG BỘ GOOGLE DRIVE (APP SKILL)
+
+Hệ thống đã được tích hợp liên kết trực tiếp với thư mục lưu trữ đám mây Google Drive **APP SKILL**:
+
+- **Đường dẫn thư mục Google Drive**: [Thư mục APP SKILL](https://drive.google.com/drive/folders/1tzL_WVnrangPqcSSeiWK7x4v7AGjKjuG?lfhs=2)
+- **Mã thư mục (Folder ID)**: `1tzL_WVnrangPqcSSeiWK7x4v7AGjKjuG`
+- **Giao diện Quản trị Chuyên biệt**: Mở file `quan_ly_skill.html` hoặc bấm nút **🗂️ Kho Skill Drive** trên thanh tiêu đề của Xưởng tạo Skill.
+
+### Các Tính năng Quản trị Cốt lõi:
+1. **Quản lý Tập trung Toàn bộ Kỹ năng Sư phạm**:
+   - Hiển thị trực quan theo dạng lưới thẻ (Grid) hoặc bảng chi tiết (Table).
+   - Bộ lọc thông minh theo **Môn học** (Toán, Lí, Hóa, Sinh, Tin, Văn, Anh...), **Cấp học** (Tiểu học, THCS, THPT) và chuyên đề mạch kiến thức.
+   - Tìm kiếm thời gian thực theo tên kỹ năng, mục tiêu đầu ra hoặc lỗi ngộ nhận.
+
+2. **12 Kỹ năng Toán học Cốt lõi Chuẩn GDPT 2018 Đã Đóng Gói Sẵn**:
+   - Đã được khởi tạo và đồng bộ đầy đủ lên thư mục Google Drive `APP SKILL` dưới dạng các file Markdown (`SKILL.md`) và tệp danh mục `DANH_MUC_SKILL.json`.
+   - Bao phủ các chuyên đề trọng tâm: Phương trình bậc hai & Vi-ét, Lập PT/Hệ PT, Tứ giác nội tiếp, Hệ thức lượng, Bất đẳng thức Cauchy AM-GM, Parabol, Phương trình chứa căn, Tọa độ Oxy, Tổ hợp & Xác suất, Hình học không gian vuông góc, Ứng dụng đạo hàm & tối ưu, Tích phân & diện tích hình phẳng.
+
+3. **Thao tác 1-Click Tiện lợi**:
+   - ✏️ **Mở trong Xưởng để sửa**: Tự động nạp toàn bộ cấu hình vào Xưởng tạo Skill (`index.html`) để tiếp tục tinh chỉnh 8 bước.
+   - 👁️ **Xem chi tiết / SKILL.md**: Xem trước nội dung chuẩn cho Claude, Google Antigravity hoặc System Prompt cho ChatGPT.
+   - 🚀 **Phòng Thử nghiệm Gia sư AI (Interactive Playground)**: Trò chuyện và kiểm tra phản xạ Socratic của gia sư ngay trên trình duyệt mà không cần cài đặt.
+   - ☁️ **Mở trực tiếp trên Google Drive**: Nhấp mở nhanh từng tệp trên Google Drive.
+   - 💾 **Lưu từ Xưởng lên Drive**: Tại Bước 8 của Xưởng, bấm nút *"☁️ Lưu vào Kho Skill Drive (APP SKILL)"* để đưa skill mới thiết kế vào kho quản trị.

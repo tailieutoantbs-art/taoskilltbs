@@ -1484,6 +1484,9 @@
         </div>
       </div>
       <div class="header-actions">
+        <a href="quan_ly_skill.html" class="btn-icon" id="btnManageSkillsHub" title="Mở Trung tâm Quản trị Kho Skill (Google Drive APP SKILL)" style="color: #1a56db; font-weight: 600; text-decoration: none;">
+          🗂️ <span>Kho Skill Drive</span>
+        </a>
         <button type="button" class="btn-icon" id="btnEngineHub" title="Trung tâm Quản trị Động cơ Sư phạm EduCore" style="color: #057a55; font-weight: 600;">
           ⚡ <span>Động cơ AI</span>
         </button>
@@ -5474,6 +5477,9 @@ Giải thích lại giúp em chỗ này với ạ`,
               <button type="button" class="btn btn-secondary" id="btnDownloadJsonBackup">
                 💾 Sao lưu dự án (JSON)
               </button>
+              <button type="button" class="btn btn-secondary" id="btnSaveToLibraryAndDrive" style="color: #057a55; border-color: #057a55; font-weight: 600;">
+                ☁️ Lưu vào Kho Skill Drive (APP SKILL)
+              </button>
             </div>
 
             ${selectedExportTab === 'html-app' ? `
@@ -6011,6 +6017,58 @@ Giải thích lại giúp em chỗ này với ạ`,
       if (e.target.closest('#btnDownloadJsonBackup') || e.target.closest('#btnExportJson')) {
         const filename = `${slugify(state.name) || 'skill-project'}.json`;
         downloadFile(filename, JSON.stringify(state, null, 2), 'application/json');
+        return;
+      }
+
+      // Save to Library & Google Drive
+      if (e.target.closest('#btnSaveToLibraryAndDrive')) {
+        try {
+          const stored = localStorage.getItem('edu_skills_repository');
+          let lib = stored ? JSON.parse(stored) : [];
+          const skillItem = {
+            id: slugify(state.name) || ('skill_' + Date.now()),
+            order: lib.length + 1,
+            title: state.name || 'Skill Giáo Dục',
+            name: state.name || 'Skill Giáo Dục',
+            subject: state.subject || 'Toán',
+            gradeText: state.level || '',
+            strand: state.scope || '',
+            level: state.level || '',
+            scope: state.scope || '',
+            ctx: state.ctx || '',
+            unit: state.unit || '',
+            prereq: state.prereq || '',
+            bloom: state.bloom || [1, 2, 3],
+            obj: state.obj || '',
+            ped: state.ped || [0, 1, 6],
+            noans: state.noans !== undefined ? state.noans : true,
+            tone: state.tone || 'Thân thiện, khích lệ',
+            mis: state.mis || '',
+            diff: state.diff || [0, 1],
+            fb: state.fb || '',
+            quiz: state.quiz || '3',
+            rub: state.rub || '',
+            trig: state.trig || '',
+            driveFolderId: '1tzL_WVnrangPqcSSeiWK7x4v7AGjKjuG',
+            filename: `${slugify(state.name) || 'skill'}.md`,
+            updatedAt: new Date().toISOString()
+          };
+          const existingIdx = lib.findIndex(item => item.id === skillItem.id || item.name === skillItem.name);
+          if (existingIdx >= 0) {
+            lib[existingIdx] = skillItem;
+          } else {
+            lib.unshift(skillItem);
+          }
+          localStorage.setItem('edu_skills_repository', JSON.stringify(lib));
+          showToast('☁️ Đã lưu Skill vào Kho Quản trị & Sẵn sàng đồng bộ Google Drive!');
+          setTimeout(() => {
+            if (confirm('Đã lưu thành công! Bạn có muốn mở Kho Quản trị Skill để kiểm tra không?')) {
+              window.location.href = 'quan_ly_skill.html';
+            }
+          }, 400);
+        } catch (err) {
+          alert('Lỗi lưu vào kho: ' + err.message);
+        }
         return;
       }
 
